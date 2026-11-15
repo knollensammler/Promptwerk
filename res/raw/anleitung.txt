@@ -1,0 +1,56 @@
+PROMPTWERK – ANLEITUNG
+
+1. Start und Grundidee
+Promptwerk ist deine persönliche Werkstatt für wiederverwendbare KI-Arbeitsaufträge. Ein Prompt beschreibt eine Aufgabe. Ein Baustein enthält eine Formulierung, Regel oder Zusatzanweisung, die du in viele Prompts einfügen kannst. Die Android-App speichert ihre Sammlung und Dateien auf diesem Gerät. Ein Konto ist für die Android-App nicht erforderlich. Die Webversion unter https://gsgev.org/promptwerk/ hat einen eigenen lokalen Speicher und optionalen Kontospeicher; ohne persönliche Google-Drive-Verbindung gibt es keinen automatischen Abgleich. Nach der bewussten Verbindung mit deinem eigenen Google-Konto werden dein eigener Bestand sowie neue Inhalte und Änderungen automatisch zwischen Android und Web synchronisiert. Nur vor Löschungen fragt Promptwerk nach.
+
+2. Einen Eintrag erstellen
+Tippe auf „+ Neu“. Es öffnet sich ein eigener leerer Editor. Gib einen aussagekräftigen Titel ein, wähle Prompt oder Textbaustein und schreibe deinen Text. „Speichern“ übernimmt ihn in die Sammlung. Der kleine Arbeitsentwurf wird davon nicht ersetzt. Du kannst einen Eintrag auch nur mit Anlagen und einem Titel speichern. „Normalansicht“ führt zurück; ungespeicherte Änderungen werden abgefragt.
+
+3. Arbeitsentwurf und Bausteine kombinieren
+Mit „Editor“ klappst du den Arbeitsentwurf auf oder zu. Der Entwurf bleibt lokal gespeichert. „Einfügen“ an einer Karte übernimmt deren Text an die Cursorposition und ersetzt eine markierte Passage. Zugehörige Anlagen werden mit übernommen. Kombiniere so Aufgaben und wiederkehrende Regeln. „Vollbild“ vergrößert das Textfeld. Lese- und Schreibmodus lassen sich umschalten. „Leeren“ entfernt Text und Anlagen des Arbeitsentwurfs ausdrücklich. Rückgängig stellt die letzte Textänderung bzw. den zuletzt geleerten Entwurf wieder her. Es gibt keinen unbegrenzten Bearbeitungsverlauf.
+
+4. Sammlung und Liste
+Die Hauptseite zeigt aktive Prompts bzw. Bausteine. Suche nach Wörtern, Projektnamen oder Datum; Favoriten helfen beim schnellen Wiederfinden. Antippen öffnet einen Eintrag, Halten zeigt weitere Aktionen. „Liste“ zeigt auch erledigte Einträge platzsparend. „Erledigt“ bewahrt den Inhalt auf; über die Liste kannst du ihn zurückholen. „→ Prompt“ bzw. „→ Baustein“ wandelt denselben Eintrag um. Löschen entfernt ihn aus der Sammlung. Eine externe Sicherung schützt vor Geräteverlust.
+
+5. Texte bearbeiten und übergeben
+Öffne den Eintrag und wähle bei Bedarf „Bearbeiten“. Speichern aktualisiert ihn. Kopieren überträgt nur den Text und verändert ihn nicht. Teilen übergibt Text und Anlagen an eine geeignete App. „Prompt übergeben“ kopiert den Text und schützt den Arbeitseditor gegen versehentliche Änderungen. „Weiterbearbeiten“ entsperrt den bisherigen Text; „Neuer Prompt“ beginnt einen neuen Arbeitsentwurf. Ob eine Ziel-App Anlagen oder die Dateizwischenablage annimmt, hängt von dieser App ab.
+
+6. Spracheingabe
+Im Hauptmenü „Spracheingabe“ wählen, um in den Arbeitsentwurf zu diktieren. Im großen Eintragsfenster liegt dieselbe Funktion im Menü „•••“. Im Arbeitsentwurf vorher gegebenenfalls „Weiterbearbeiten“ wählen. Setze den Cursor oder markiere den zu ersetzenden Text. Nach dem Datenschutzhinweis öffnet sich der eingerichtete Android-Spracherkennungsdienst. Sprich deinen Text und bestätige ihn dort. Der erkannte Text wird an der ursprünglichen Cursorposition eingefügt. Prüfe Namen, Satzzeichen und Zahlen vor dem Speichern. Abbrechen verändert keinen Text. Wurde der Text inzwischen geändert oder das Fenster geschlossen, wird das Diktat nicht ungefragt eingefügt.
+Promptwerk fordert bevorzugt Offline-Erkennung an. Ob sie verfügbar ist, hängt vom installierten Dienst und den heruntergeladenen Sprachdaten ab. Ein Dienst kann Audio zur Erkennung übertragen. Promptwerk selbst nimmt kein Audio auf und speichert keine Aufnahme. Fehlt ein Dienst, kannst du das Mikrofon deiner Bildschirmtastatur benutzen. Mikrofon- und Diensterlaubnisse werden in Android bzw. in der Erkennungs-App verwaltet.
+
+7. Anlagen
+„Anhänge“ öffnet die Dateiauswahl. Unterstützt werden Bilder und PDF-/TXT-Dateien. In der Android-App gelten bis zu zehn Bilder und zehn Dokumente, höchstens 25 MB pro Datei und 100 MB zusammen pro Eintrag. Die App legt private lokale Kopien an. Im Anhangmenü kannst du Dateien öffnen, aus dem Eintrag entfernen oder als Datei in die Zwischenablage kopieren. Kopieren des Prompttexts enthält die Dateien nicht. Beim Teilen erhält die Ziel-App nur vorübergehende Leserechte. Die Webversion verwendet eine eigene Grenze von 10 MB pro Anlage und höchstens 200 MB Kontospeicher. Lokale und entfernte Webanlagen sind dort ausdrücklich beschriftet.
+
+8. Projekte und TXT-Übergabe
+Nur aktive Prompts gehören zu Projekten. Weise über „Projekt“ einen vorhandenen Namen, einen neuen Namen oder „Ohne Projekt“ zu. Unter „Projekte / TXT exportieren“ wählst du das Projekt. Der Export enthält ausschließlich dessen aktive Prompts in Sammlungsreihenfolge, keine Bausteine, Erledigten, Ideen oder Arbeitsentwürfe. TXT-Anlagen werden lesbar aufgenommen; Bilder und PDF werden mit Metadaten und Base64 eingebettet. Eine KI kann solche Binärdaten nicht zwingend verstehen. Große Dateien gegebenenfalls zusätzlich als echte Anlagen hochladen; Kontextgrenzen beachten. Ein Hinweis zur ausschließlichen Aufgabenverwendung verhindert die Speicherung durch einen fremden KI-Dienst nicht technisch. Nutze dessen Datenschutzeinstellungen oder einen temporären Chat.
+
+9. Ideen, geparkte Entwürfe und Optimieren
+„Projektideen“ öffnet lokale Notizen. „Geparkte Entwürfe“ hält vorübergehend zurückgelegte Texte bereit. „Automatisch optimieren“ strukturiert einen Text mit festen lokalen Regeln und bietet eine neue Fassung an. Es ist keine KI-Umschreibung; Inhalt vor Übernahme prüfen. Diese lokalen Arbeitsdaten sind in der ZIP-Sicherung enthalten.
+
+10. Tokensparer
+Der Tokensparer übersetzt Texte mit Google ML Kit auf dem Gerät. Beim ersten Einsatz müssen Sprachmodelle heruntergeladen werden, vorzugsweise im WLAN. ML Kit kann technische Nutzungs- und Diagnosedaten an Google senden. Deutsche Texte können als englische Fassung gespeichert und englische Texte auf Deutsch zurückgeholt werden. Prüfe Übersetzungen vor der Übernahme. Die tatsächliche Tokenersparnis hängt von Text und KI-Modell ab.
+
+11. Sichern und Wiederherstellen
+Im Menü „Sicherung exportieren“ eine ZIP-Datei außerhalb des App-Speichers speichern. Sie enthält Sammlung, Arbeitsentwurf, Anlagen, Ideen und geparkte Entwürfe. „Alles auf GDrive speichern“ übergibt eine vollständige Sicherung an die installierte Drive-App. Wähle dort das richtige Google-Konto und den Zielordner und schließe den Upload ab. Eine Übergabe ist noch keine bestätigte Cloudspeicherung; kontrolliere die Datei in Drive. „Sicherung importieren“ ergänzt die Sammlung, ohne identische Inhalte doppelt anzulegen. Ein gesicherter Arbeitsentwurf kann separat übernommen werden. Alte JSON-Sicherungen sind weiterhin lesbar. Web-Sicherungen haben ein anderes Format und werden nicht automatisch mit der Android-App zusammengeführt.
+
+12. Updates und Datenschutz
+Über „Auf Updates prüfen“ fragt die App den GsG-Versionsfeed per HTTPS ab. Dabei werden keine Prompttexte und Anlagen hochgeladen. Eine angebotene APK als Update über die bestehende App installieren, nicht vorher deinstallieren. Vor Updates und besonders vor Gerätewechsel eine externe ZIP-Sicherung anlegen. „Info & Impressum“ nennt die Vereinsangaben. Texte und Anlagen bleiben lokal, solange du sie nicht bewusst teilst, exportierst, an Drive übergibst oder einen externen Erkennungsdienst verwendest. Sensible Sicherungen geschützt aufbewahren. Rein lokale Ablagen und Sicherungskopien bleiben getrennt. Bei synchronisierten Drive-Inhalten wird auch eine Löschung mit anderen verbundenen Geräten abgeglichen; neuere konkurrierende Fassungen bleiben geschützt.
+
+
+13. Mein persönliches Google Drive / Sync
+„Mein Google Drive / Sync“ verbindet dein eigenes Google-Konto über den Systembrowser. Wähle dort dein Konto und erlaube den Zugriff ausdrücklich. Jeder Nutzer hat seinen eigenen privaten Drivebestand; es wird kein gemeinsamer GsG-Dateispeicher verwendet. Ein Google-Konto auf Android allein erteilt noch keine Berechtigung.
+
+Ohne Google-Verbindung speicherst du lokal. Nach der bewussten Verbindung ist persönlicher Google-Drive-Sync automatisch aktiv; die erneute Speicherwahl je Eintrag entfällt. Die Sammlung kennzeichnet den Ort mit „Lokal“ bzw. „Mein Drive“. Bei einem Drive-Eintrag werden alle zugehörigen Anlagen für den Sync einbezogen. Die vorhandene eigene Sammlung, Projektideen und geparkte Entwürfe werden beim Verbinden automatisch übernommen und danach laufend abgeglichen. Ideen und geparkte Entwürfe werden je Google-Konto getrennt geführt; lokale Originale bleiben erhalten. Konflikte erhalten getrennte Fassungen. Der aktuell ungespeicherte Arbeitsentwurf bleibt gerätebezogen. Für synchronisierte Dateien gelten höchstens10MiB, insgesamt200MiB Promptwerk-Daten. Android behält notwendige lokale Kopien für die Offline-Nutzung.
+
+Neue Inhalte und Änderungen werden ohne zusätzliche Nachfrage lokal vorgemerkt und mit Internet nachgeholt. Ein aktiver Abgleich läuft beim Öffnen der App sowie über Android-Hintergrundaufgaben; Android kann diese bei Energiesparen, fehlendem Netz oder eingeschränkter Hintergrundnutzung verzögern. „Jetzt synchronisieren“ stößt den Abgleich an und der Menüstatus zeigt das Ergebnis. Ohne bestätigten Sync gelten Änderungen noch nicht als in Drive gespeichert.
+
+Gleichzeitige Änderungen bleiben als zusätzliche Konfliktkopie erhalten. Wird offline ein Eintrag gelöscht, den ein anderes Gerät inzwischen geändert hat, bleibt die neuere Fassung erhalten und wird wieder sichtbar. Prüfe sie und lösche bei Bedarf erneut. Eine verlorene Serverantwort darf nicht zu einer zusätzlichen Kopie führen; derselbe vorgemerkte Auftrag wird wiedererkannt.
+
+„Dieses Gerät trennen“ widerruft den Gerätezugang auf dem Server. Ohne Internet wird dieser Widerruf geschützt vorgemerkt; weiterer Sync bleibt gesperrt, bis er bestätigt ist. Andere Geräte und Drive-Dateien bleiben erhalten. Das ist etwas anderes als das Abmelden der Websitzung oder der vollständige Widerruf der Google-App-Berechtigung in deinem Google-Konto. Noch nicht synchronisierte ausgewählte Änderungen zuerst abgleichen oder bewusst lokal sichern.
+
+Die manuelle Aktion „Alles auf GDrive speichern“ erstellt weiterhin eine ZIP-Sicherung über die Drive-App. Sie ist vom persönlichen automatischen Sync getrennt. Eine eigene externe Sicherung bleibt zusätzlich sinnvoll. Gerätezugänge und OAuth-Berechtigungen können ablaufen oder widerrufen werden; ein entsprechender Status verlangt eine erneute Verbindung. Der Google-Testmodus kann die Laufzeit zusätzlich begrenzen und ist keine Freigabe für Dauerbetrieb.
+
+Projektideen sind im Web als Bereich „Projektidee“, geparkte Entwürfe als „Geparkter Entwurf“ erreichbar. Persönlicher Drive-Sync läuft derzeit im Google-Testbetrieb und steht nur den dort freigeschalteten Testkonten zur Verfügung.
+
+Die bewusste Verbindung ist die einmalige Aktivierung des automatischen Abgleichs. Jede bestätigte Löschung wird ebenfalls mit deinen verbundenen Geräten abgeglichen; dort erscheint keine zweite Löschfrage. Android kann Hintergrundarbeit bei Energiesparen oder fehlendem Netz verzögern.

@@ -1,0 +1,55 @@
+plugins { id 'com.android.application' version '8.9.2' }
+android {
+    namespace 'de.mika.promptwerk'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'de.mika.promptwerk'
+        minSdk 26
+        targetSdk 34
+        versionCode 18
+        versionName '3.3'
+    }
+    sourceSets {
+        main { manifest.srcFile 'AndroidManifest.xml'; java.srcDirs = ['src']; res.srcDirs = ['res'] }
+        test { java.srcDirs = ['tests'] }
+    }
+    signingConfigs {
+        release {
+            storeFile file('signing.p12')
+            storePassword System.getenv('PROMPTWERK_STORE_PASSWORD')
+            keyAlias 'promptwerk'
+            keyPassword System.getenv('PROMPTWERK_STORE_PASSWORD')
+        }
+    }
+    buildFeatures { buildConfig true }
+    flavorDimensions += 'endpoint'
+    productFlavors {
+        production {
+            dimension 'endpoint'
+            versionCode 19
+            buildConfigField 'String', 'DRIVE_BASE', '"https://gsgev.org/promptwerk/"'
+            manifestPlaceholders = [appLabel: 'Promptwerk']
+        }
+        pruefung {
+            dimension 'endpoint'
+            versionNameSuffix '-Pruefung'
+            buildConfigField 'String', 'DRIVE_BASE', '"https://gsgev.org/promptwerk/pruefung-20261114/"'
+            manifestPlaceholders = [appLabel: 'Promptwerk Prüfung']
+        }
+    }
+    buildTypes { release { signingConfig signingConfigs.release; minifyEnabled false } }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_1_8; targetCompatibility JavaVersion.VERSION_1_8 }
+    testOptions { unitTests.includeAndroidResources = true }
+}
+dependencies {
+    implementation 'com.google.mlkit:translate:17.0.3'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.14.1'
+}
+tasks.withType(Test).configureEach {
+    // Forward explicitly supplied network settings to Robolectric's SDK resolver.
+    ['javax.net.ssl.trustStore','https.proxyHost','https.proxyPort','http.proxyHost','http.proxyPort','maven.repo.local','user.home'].each { key ->
+        if (System.getProperty(key) != null) systemProperty key, System.getProperty(key)
+    }
+    systemProperty 'robolectric.dependency.repo.url', 'https://repo.maven.apache.org/maven2'
+}

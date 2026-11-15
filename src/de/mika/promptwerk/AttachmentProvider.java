@@ -1,0 +1,10 @@
+package de.mika.promptwerk;
+import android.content.*;import android.database.*;import android.net.Uri;import android.os.*;import android.provider.OpenableColumns;import java.io.*;
+public class AttachmentProvider extends ContentProvider {
+ public boolean onCreate(){return true;}
+ private File file(Uri u)throws FileNotFoundException{if(u.getPathSegments().size()==2&&"backup".equals(u.getPathSegments().get(0))&&u.getLastPathSegment().matches("[a-f0-9-]{36}\\.zip")){File f=new File(getContext().getCacheDir(),"drive-backups/"+u.getLastPathSegment());if(!f.isFile())throw new FileNotFoundException();return f;}if(u.getPathSegments().size()!=1||!AttachmentPolicy.validKey(u.getLastPathSegment()))throw new FileNotFoundException();File f=new File(getContext().getFilesDir(),"attachments/"+u.getLastPathSegment());if(!f.isFile())throw new FileNotFoundException();return f;}
+ public String getType(Uri u){if(u.getPathSegments().size()==2&&"backup".equals(u.getPathSegments().get(0)))return "application/zip";String t=u.getQueryParameter("type");return AttachmentPolicy.allowed(t)?t:"application/octet-stream";}
+ public ParcelFileDescriptor openFile(Uri u,String mode)throws FileNotFoundException{if(!"r".equals(mode))throw new FileNotFoundException("Nur lesen");return ParcelFileDescriptor.open(file(u),ParcelFileDescriptor.MODE_READ_ONLY);}
+ public Cursor query(Uri u,String[] projection,String selection,String[] args,String sort){try{File f=file(u);String[] cols=projection==null?new String[]{OpenableColumns.DISPLAY_NAME,OpenableColumns.SIZE}:projection;MatrixCursor c=new MatrixCursor(cols);Object[] values=new Object[cols.length];for(int i=0;i<cols.length;i++){if(cols[i].equals(OpenableColumns.DISPLAY_NAME))values[i]=u.getQueryParameter("name");else if(cols[i].equals(OpenableColumns.SIZE))values[i]=f.length();}c.addRow(values);return c;}catch(Exception e){return null;}}
+ public Uri insert(Uri u,ContentValues v){throw new UnsupportedOperationException();}public int delete(Uri u,String s,String[] a){throw new UnsupportedOperationException();}public int update(Uri u,ContentValues v,String s,String[] a){throw new UnsupportedOperationException();}
+}
