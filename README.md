@@ -29,7 +29,7 @@ Der Debugbuild benötigt den privaten Originalsignierer nicht. Er kann wegen der
 
 Die Releasekonfiguration verweist absichtlich auf einen nicht mitgelieferten `signing.p12` und die Umgebungsvariable `PROMPTWERK_STORE_PASSWORD`. Eigene Releases benötigen einen eigenen Signierer. Niemals private Schlüssel oder Kennwörter in Git veröffentlichen. Es wird kein Ersatz für den Originalsignierer erzeugt.
 
-Die Produktvariante `production` verwendet die ursprünglichen GsG-Endpunkte. Der optionale persönliche Google-Drive-Sync benötigt diese Gegenstelle, eigenes Nutzer-OAuth und ein für den aktuellen Google-Testbetrieb zugelassenes Konto. Das öffentliche Repository enthält die Android-App, keinen öffentlich betriebenen Backenddienst und keine Garantie für dessen dauerhaften Zugang. Für unabhängige Forks eigene Backend-/OAuth-Infrastruktur einrichten und `DRIVE_BASE` ändern. Lokale Nutzung und Android-Sicherungen bleiben möglich.
+Die Produktvariante `production` verwendet die ursprünglichen GsG-Endpunkte. Der optionale persönliche Google-Drive-Sync benötigt diese Gegenstelle, eigenes Nutzer-OAuth und die bewusste Verbindung des persönlichen Google-Kontos. Die Google-OAuth-App ist seit dem 15.11.2026 für externe Nutzer im Produktionsstatus veröffentlicht; eine Aufnahme als Testnutzer ist nicht mehr erforderlich. Das öffentliche Repository enthält die Android-App, keinen öffentlich betriebenen Backenddienst und keine Garantie für dessen dauerhaften Zugang. Für unabhängige Forks eigene Backend-/OAuth-Infrastruktur einrichten und `DRIVE_BASE` ändern. Lokale Nutzung und Android-Sicherungen bleiben möglich.
 
 ## Prüfstand des Originals
 
