@@ -112,4 +112,14 @@ public class DriveOfflineTests {
         DriveMerge.capture(state.getJSONObject("records"),new JSONArray().put(e),other);JSONObject r=state.getJSONObject("records").getJSONObject("foreign-extra");DriveMerge.startFlight(r);r.getJSONObject("entry").put("files",new JSONArray());DriveSync.write(context,other,state);
         assertTrue(DriveSync.referencedFiles(context).contains("old-file"));
     }
+    @Test public void legacyInferredDeleteIsCancelledOnUpgrade() throws Exception {
+        JSONObject s=new JSONObject().put("records",new JSONObject().put("one",new JSONObject().put("entry",entry("one","Recover me")).put("base",3).put("dirty",true).put("deleted",true))).put("files",new JSONObject());
+        java.nio.file.Files.write(new File(DriveSync.directory(context),owner+".json").toPath(),s.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        JSONObject upgraded=DriveSync.state(context,owner),r=row(upgraded,"one");assertFalse(r.getBoolean("deleted"));assertTrue(r.getBoolean("dirty"));assertEquals(0,r.getInt("base"));assertTrue(upgraded.getBoolean("bootstrapLocalPending"));
+    }
+    @Test public void newQueueDoesNotReenterMigrationOnEveryRead() throws Exception {
+        JSONObject s=DriveSync.state(context,owner);DriveMerge.capture(s.getJSONObject("records"),new JSONArray().put(entry("one","A")),owner);DriveSync.write(context,owner,s);
+        assertEquals(2,DriveSync.state(context,owner).getInt("protocol"));assertFalse(DriveSync.state(context,owner).optBoolean("bootstrapLocalPending"));
+    }
+
 }

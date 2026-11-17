@@ -5,7 +5,7 @@ final class DriveHttp {
  static final String BASE=BuildConfig.DRIVE_BASE;
  static byte[] request(String path,String method,byte[] body,String token,String name)throws Exception{
   if(!path.matches("google-(sync|file|device)\\.php(?:\\?[a-zA-Z0-9_=&%.-]*)?"))throw new IOException("Ungültiges Syncziel");
-  HttpURLConnection c=(HttpURLConnection)new URL(BASE+path).openConnection();c.setInstanceFollowRedirects(false);c.setConnectTimeout(20000);c.setReadTimeout(60000);c.setRequestMethod(method);c.setRequestProperty("Accept","application/json");
+  HttpURLConnection c=(HttpURLConnection)new URL(BASE+path).openConnection();c.setInstanceFollowRedirects(false);c.setConnectTimeout(20000);c.setReadTimeout(60000);c.setRequestMethod(method);c.setRequestProperty("Accept","application/json");c.setRequestProperty("X-Promptwerk-Sync-Protocol","2");
   if(token!=null)c.setRequestProperty("X-Promptwerk-Device","Bearer "+token);
   if(name!=null)c.setRequestProperty("X-File-Name",URLEncoder.encode(name,"UTF-8").replace("+","%20"));
   if(body!=null){c.setRequestProperty("Content-Type",name==null?"application/json":"application/octet-stream");c.setDoOutput(true);c.setFixedLengthStreamingMode(body.length);try(OutputStream out=c.getOutputStream()){out.write(body);}}

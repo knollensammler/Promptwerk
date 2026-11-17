@@ -1,0 +1,18 @@
+package de.mika.promptwerk;
+import org.junit.*;import static org.junit.Assert.*;import org.json.*;
+/** Regression tests use the production merge with two independent device states. */
+@org.junit.runner.RunWith(org.robolectric.RobolectricTestRunner.class)
+@org.robolectric.annotation.Config(sdk=35)
+public class SyncDataLossTests {
+ final String owner=String.join("",java.util.Collections.nCopies(64,"a"));
+ JSONObject entry(String text)throws Exception{return new JSONObject().put("id","one").put("title","Test").put("text",text).put("type","prompt").put("files",new JSONArray()).put("cloud",true).put("cloudOwner",owner);}
+ JSONObject doc(String text,int revision)throws Exception{return new JSONObject().put("entries",new JSONObject().put("one",entry(text).put("syncVersion",revision))).put("deleted",new JSONObject());}
+ JSONObject displayed(String text,int revision)throws Exception{JSONObject rows=new JSONObject();DriveMerge.pull(rows,doc(text,revision),owner);JSONObject row=rows.getJSONObject("one");row.put("seenLocal",true).put("localContent",DriveMerge.content(entry(text))).put("localBase",revision);return rows;}
+ @Test public void incompleteSnapshotNeverDeletesPreviouslyDisplayedEntry()throws Exception{JSONObject rows=displayed("Kept",1);DriveMerge.capture(rows,new JSONArray(),owner);assertFalse(rows.getJSONObject("one").optBoolean("deleted"));assertFalse(rows.getJSONObject("one").optBoolean("dirty"));}
+ @Test public void unchangedOldUiCannotOverwriteNewBackgroundPull()throws Exception{JSONObject rows=displayed("A",1);DriveMerge.pull(rows,doc("B",2),owner);DriveMerge.capture(rows,new JSONArray().put(entry("A")),owner);assertEquals("B",rows.getJSONObject("one").getJSONObject("entry").getString("text"));assertFalse(rows.getJSONObject("one").optBoolean("dirty"));}
+ @Test public void editAgainstOldDisplayedVersionKeepsOldBaseForConflict()throws Exception{JSONObject rows=displayed("A",1);DriveMerge.pull(rows,doc("B",2),owner);DriveMerge.capture(rows,new JSONArray().put(entry("C")),owner);assertEquals(1,rows.getJSONObject("one").getInt("base"));assertTrue(rows.getJSONObject("one").getBoolean("dirty"));assertEquals("C",rows.getJSONObject("one").getJSONObject("entry").getString("text"));}
+ @Test public void onlyExplicitConfirmationQueuesDelete()throws Exception{JSONObject rows=displayed("A",1);DriveMerge.deleteConfirmed(rows,"one");DriveMerge.capture(rows,new JSONArray(),owner);assertTrue(rows.getJSONObject("one").getBoolean("deleted"));assertTrue(rows.getJSONObject("one").getBoolean("deleteConfirmed"));}
+ @Test public void upgradeWithoutDisplayedBaselineUsesConflictInsteadOfOverwrite()throws Exception{JSONObject rows=new JSONObject();DriveMerge.pull(rows,doc("Remote",5),owner);DriveMerge.capture(rows,new JSONArray().put(entry("Local")),owner);assertEquals(0,rows.getJSONObject("one").getInt("base"));assertEquals("Local",rows.getJSONObject("one").getJSONObject("entry").getString("text"));}
+ @Test public void incomingNewEntrySurvivesRepeatedEmptySnapshots()throws Exception{JSONObject rows=new JSONObject();DriveMerge.pull(rows,doc("New on B",2),owner);for(int n=0;n<3;n++)DriveMerge.capture(rows,new JSONArray(),owner);assertFalse(rows.getJSONObject("one").optBoolean("deleted"));assertEquals("New on B",rows.getJSONObject("one").getJSONObject("entry").getString("text"));}
+ @Test public void noRemoteDeleteWhileSaveFlightUnacknowledged()throws Exception{JSONObject rows=displayed("A",1);JSONObject r=rows.getJSONObject("one");DriveMerge.startFlight(r);DriveMerge.pull(rows,new JSONObject().put("entries",new JSONObject()).put("deleted",new JSONObject().put("one",new JSONObject().put("syncVersion",2))),owner);assertFalse(r.optBoolean("deleted"));}
+}

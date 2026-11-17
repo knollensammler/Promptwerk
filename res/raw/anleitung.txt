@@ -54,3 +54,7 @@ Die manuelle Aktion „Alles auf GDrive speichern“ erstellt weiterhin eine ZIP
 Projektideen sind im Web als Bereich „Projektidee“, geparkte Entwürfe als „Geparkter Entwurf“ erreichbar. Persönlicher Drive-Sync läuft derzeit im Google-Testbetrieb und steht nur den dort freigeschalteten Testkonten zur Verfügung.
 
 Die bewusste Verbindung ist die einmalige Aktivierung des automatischen Abgleichs. Jede bestätigte Löschung wird ebenfalls mit deinen verbundenen Geräten abgeglichen; dort erscheint keine zweite Löschfrage. Android kann Hintergrundarbeit bei Energiesparen oder fehlendem Netz verzögern.
+
+Syncreparatur 3.4: Fehlende Einträge in einem Gerätezwischenstand lösen keine Cloudlöschung aus. Löschungen benötigen die ausdrückliche Bestätigung. Alte Offlinewarteschlangen werden verlustschonend übernommen; bei konkurrierenden Fassungen bleiben Konfliktkopien erhalten. Vor dem ersten Abgleich mit dem neuen Protokoll wird der bisherige Drivebestand im eigenen Drive gesichert.
+
+Prompt übergeben: Der Text wird in die Zwischenablage kopiert und gezielt als Text an die installierte ChatGPT-App übergeben. Die Annahme und Darstellung entscheidet ChatGPT. Wenn die App diese Übergabe nicht unterstützt, den kopierten Text dort einfügen. Das Original bleibt im geschützten Editor erhalten; Weiterbearbeiten hebt den Schutz auf. Es wird keine Nachricht automatisch abgesendet.

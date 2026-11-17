@@ -6,3 +6,6 @@ local.properties
 *.jks
 *.keystore
 .env*
+
+# Generated Robolectric previews
+tests/*.png

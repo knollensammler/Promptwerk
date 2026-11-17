@@ -20,14 +20,24 @@ final class DriveMerge {
   for(int i=0;i<items.length();i++){JSONObject e=items.getJSONObject(i);String id=e.getString("id");seen.add(id);JSONObject r=records.optJSONObject(id);
    if(!e.optBoolean("cloud")||!owner.equals(e.optString("cloudOwner"))){if(r!=null)r.put("excluded",true);continue;}
    if(r==null){r=new JSONObject().put("entry",copy(e)).put("base",0).put("dirty",true);records.put(id,r);}
-   else if(!content(e).equals(content(r.getJSONObject("entry")))){r.put("entry",copy(e)).put("dirty",true);}
-   r.put("seenLocal",true).put("excluded",false).put("deleted",false);
+   else if(!content(e).equals(r.optString("localContent",content(r.getJSONObject("entry"))))){
+    // A clean pulled row is not proof that the UI has displayed that version.
+    if(!r.optBoolean("dirty")&&!r.has("flight"))r.put("base",r.optInt("localBase",0));
+    r.put("entry",copy(e)).put("dirty",true);
+   }
+   if(!r.has("localBase")&&!r.optBoolean("dirty"))r.put("localBase",r.optInt("base"));
+   r.put("seenLocal",true).put("excluded",false).put("localContent",content(e));
+   if(r.optBoolean("dirty")&&!r.optBoolean("deleteConfirmed"))r.put("deleted",false);
   }
-  Iterator<String> ids=records.keys();while(ids.hasNext()){JSONObject r=records.getJSONObject(ids.next());if(r.optBoolean("seenLocal")&&!r.optBoolean("excluded")&&!seen.contains(r.getJSONObject("entry").getString("id")))r.put("deleted",true).put("dirty",true);}
+  // Absence from a snapshot is never authorization to delete cloud data.
+
+ }
+ static void deleteConfirmed(JSONObject records,String id)throws JSONException{
+  JSONObject r=records.optJSONObject(id);if(r!=null)r.put("deleted",true).put("dirty",true).put("deleteConfirmed",true);
  }
  static void pull(JSONObject records,JSONObject manifest,String owner)throws JSONException{
-  JSONObject entries=manifest.getJSONObject("entries");Iterator<String> ids=entries.keys();while(ids.hasNext()){String id=ids.next();JSONObject old=records.optJSONObject(id);if(old!=null&&(old.optBoolean("dirty")||old.has("flight")))continue;JSONObject e=fromWire(entries.getJSONObject(id),owner);JSONObject r=new JSONObject().put("entry",e).put("base",e.optInt("syncVersion")).put("dirty",false).put("deleted",false).put("seenLocal",old!=null&&old.optBoolean("seenLocal")).put("excluded",old!=null&&old.optBoolean("excluded"));records.put(id,r);}
-  JSONObject deleted=manifest.optJSONObject("deleted");if(deleted!=null){ids=deleted.keys();while(ids.hasNext()){String id=ids.next();JSONObject r=records.optJSONObject(id);if(r!=null&&!r.optBoolean("dirty"))r.put("deleted",true).put("remoteDeleted",true);}}
+  JSONObject entries=manifest.getJSONObject("entries");Iterator<String> ids=entries.keys();while(ids.hasNext()){String id=ids.next();JSONObject old=records.optJSONObject(id);if(old!=null&&(old.optBoolean("dirty")||old.has("flight")))continue;JSONObject e=fromWire(entries.getJSONObject(id),owner);JSONObject r=new JSONObject().put("entry",e).put("base",e.optInt("syncVersion")).put("dirty",false).put("deleted",false).put("seenLocal",old!=null&&old.optBoolean("seenLocal")).put("excluded",old!=null&&old.optBoolean("excluded"));if(old!=null&&old.has("localContent"))r.put("localContent",old.getString("localContent")).put("localBase",old.optInt("localBase",old.optInt("base")));records.put(id,r);}
+  JSONObject deleted=manifest.optJSONObject("deleted");if(deleted!=null){ids=deleted.keys();while(ids.hasNext()){String id=ids.next();JSONObject r=records.optJSONObject(id);if(r!=null&&!r.optBoolean("dirty")&&!r.has("flight"))r.put("deleted",true).put("remoteDeleted",true);}}
  }
  static JSONObject startFlight(JSONObject row)throws JSONException{JSONObject existing=row.optJSONObject("flight");if(existing!=null)return existing;JSONObject flight=new JSONObject().put("operation",UUID.randomUUID().toString()).put("entry",copy(row.getJSONObject("entry"))).put("deleted",row.optBoolean("deleted")).put("base",row.optInt("base"));row.put("flight",flight);return flight;}
  static String acknowledge(JSONObject records,String id,JSONObject result,String owner)throws JSONException{
@@ -45,7 +55,7 @@ final class DriveMerge {
    return "Gleichzeitige Änderungen wurden als getrennte Konfliktkopie erhalten.";
   }
   if(flight.optBoolean("deleted")&&!edited){records.remove(id);return "";}
-  latest.remove("flight");latest.put("base",base).put("dirty",edited);return "";
+  latest.remove("flight");latest.put("base",base).put("localBase",base).put("dirty",edited);return "";
  }
  static JSONObject fromWire(JSONObject wire,String owner)throws JSONException{
   JSONObject e=copy(wire);e.put("cloud",true).put("cloudOwner",owner);JSONArray files=e.optJSONArray("files");JSONArray out=new JSONArray();if(files!=null)for(int i=0;i<files.length();i++){JSONObject f=copy(files.getJSONObject(i));String key=f.optString("key",f.optString("id"));if(!key.matches("[a-f0-9]{64}"))key=sha(("foreign-local:"+key).getBytes(java.nio.charset.StandardCharsets.UTF_8));JSONObject nativeFile=new JSONObject().put("key",key).put("name",f.getString("name")).put("mime",f.getString("mime")).put("size",f.getLong("size")).put("sync",f.optString("storage").equals("drive"));out.put(nativeFile);}e.put("files",out);return e;
